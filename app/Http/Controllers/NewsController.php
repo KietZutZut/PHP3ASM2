@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\DB;
 class NewsController extends Controller
 {
     public function index()
-    {
-        $tatCaTin = DB::table('news')->get(['id', 'title']); 
-        return view('home', compact('tatCaTin'));
-    }
+{
+    $tatCaTin = DB::table('news')->orderBy('created_at', 'desc')->get(['id', 'title']);
+    $tinNoiBat = DB::table('news')->orderBy('views', 'desc')->first();
+    $tinXemNhieu = DB::table('news')->orderBy('views', 'desc')->limit(5)->get(['id', 'title']);
+
+    return view('home', compact('tatCaTin', 'tinNoiBat', 'tinXemNhieu'));
+}
+
 
     public function xemNhieu(){
         $tinXemNhieu = DB::table('news')

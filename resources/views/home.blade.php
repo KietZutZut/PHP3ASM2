@@ -1,47 +1,60 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Trang chủ - Tất cả tin tức</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-4">
-        <!-- Tiêu đề -->
-        <h1 class="display-4 text-center mb-4">Tất cả tin tức</h1>
+@extends('layouts.app')
 
-        <!-- Navigation Links -->
-        <div class="mb-4">
-            <ul class="nav nav-pills justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('xemnhieu') }}">Tin xem nhiều</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tinmoi') }}">Tin mới</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                        Tin trong loại
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('tintrongloai', 1) }}">Thể thao</a></li>
-                        <li><a class="dropdown-item" href="{{ route('tintrongloai', 2) }}">Công nghệ</a></li>
-                        <li><a class="dropdown-item" href="{{ route('tintrongloai', 3) }}">Giải trí</a></li>
-                    </ul>
-                </li>
+@section('title', 'Trang chủ')
+
+@section('content')
+<div class="container mt-4">
+    <!-- Tiêu đề -->
+    <h1 class="display-4 text-center mb-4">Tin tức mới nhất</h1>
+
+    <!-- Bố cục tin tức -->
+    <div class="row">
+        <!-- Cột chính -->
+        <div class="col-lg-8">
+            <!-- Tin nổi bật (lấy tin có lượt xem cao nhất) -->
+            @if(isset($tinNoiBat))
+                <div class="alert alert-primary text-center">
+                    <h2>
+                        <a href="{{ route('tin', $tinNoiBat->id) }}" class="text-decoration-none text-dark">
+                            {{ $tinNoiBat->title }}
+                        </a>
+                    </h2>
+                </div>
+            @endif
+
+            <!-- Danh sách tin mới -->
+            <ul class="list-group">
+                @foreach($tatCaTin as $tin)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="{{ route('tin', $tin->id) }}" class="text-decoration-none">
+                            {{ $tin->title }}
+                        </a>
+                        <a href="{{ route('tin', $tin->id) }}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
 
-        <!-- Danh sách tin tức -->
-        <ul class="list-group">
-            @foreach($tatCaTin as $tin)
-                <li class="list-group-item">
-                    <a href="{{ route('tin', $tin->id) }}" class="text-decoration-none">{{ $tin->title }}</a>
-                </li>
-            @endforeach
-        </ul>
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Danh mục tin -->
+            <div class="list-group mb-4">
+                <h4 class="mb-3">Danh mục</h4>
+                <a href="{{ route('tintrongloai', 1) }}" class="list-group-item list-group-item-action">Thể thao</a>
+                <a href="{{ route('tintrongloai', 2) }}" class="list-group-item list-group-item-action">Công nghệ</a>
+                <a href="{{ route('tintrongloai', 3) }}" class="list-group-item list-group-item-action">Giải trí</a>
+            </div>
+
+            <!-- Tin xem nhiều -->
+            <div class="list-group">
+                <h4 class="mb-3">Tin xem nhiều</h4>
+                @foreach($tinXemNhieu as $tin)
+                    <a href="{{ route('tin', $tin->id) }}" class="list-group-item list-group-item-action">
+                        {{ $tin->title }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
     </div>
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+@endsection
