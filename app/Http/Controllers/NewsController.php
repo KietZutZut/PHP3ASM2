@@ -3,46 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\News;
+use App\Models\Category;
 
 class NewsController extends Controller
 {
     public function index()
-{
-    $tatCaTin = DB::table('news')->orderBy('created_at', 'desc')->get(['id', 'title']);
-    $tinNoiBat = DB::table('news')->orderBy('views', 'desc')->first();
-    $tinXemNhieu = DB::table('news')->orderBy('views', 'desc')->limit(5)->get(['id', 'title']);
+    {
+        // Lấy tất cả tin, bao gồm cột image
+        $tatCaTin = News::orderBy('created_at', 'desc')->get(['id', 'title', 'image', 'category_id', 'created_at']);
+        $tinNoiBat = News::orderBy('views', 'desc')->first();
+        $tinXemNhieu = News::orderBy('views', 'desc')->take(5)->get(['id', 'title', 'image', 'category_id', 'created_at']);
 
-    return view('home', compact('tatCaTin', 'tinNoiBat', 'tinXemNhieu'));
-}
+        return view('home', compact('tatCaTin', 'tinNoiBat', 'tinXemNhieu'));
+    }
 
-
-    public function xemNhieu(){
-        $tinXemNhieu = DB::table('news')
-            ->orderBy('views', 'desc')
-            ->limit(10)
-            ->get(['title']);
+    public function xemNhieu()
+    {
+        $tinXemNhieu = News::orderBy('views', 'desc')
+            ->take(10)
+            ->get(['id', 'title', 'image', 'category_id', 'created_at']);
         return view('xemnhieu', compact('tinXemNhieu'));
     }
 
-    public function tinMoi(){
-        $tinMoi = DB::table('news')
-            ->orderBy('created_at', 'desc')
-            ->limit(10)
-            ->get(['title']);
+    public function tinMoi()
+    {
+        $tinMoi = News::orderBy('created_at', 'desc')
+            ->take(10)
+            ->get(['id', 'title', 'image', 'category_id', 'created_at']);
         return view('tinmoi', compact('tinMoi'));
     }
 
-    public function tinTrongLoai($id){
-        $tinTrongLoai = DB::table('news')->where('category_id', $id)->get(['id', 'title']);
-        $tenLoai = DB::table('categories')->where('id', $id)->value('name');
+    public function tinTrongLoai($id)
+    {
+        $tenLoai = Category::where('id', $id)->value('name');
+        $tinTrongLoai = News::where('category_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get(['id', 'title', 'image', 'category_id', 'created_at']);
         return view('tintrongloai', compact('tinTrongLoai', 'tenLoai'));
     }
 
-    public function chiTietTin($id){
-        $tin = DB::table('news')
-            ->where('id', $id)
-            ->first();
+    public function chiTietTin($id)
+    {
+        $tin = News::findOrFail($id);
+        $tin->increment('views'); // Tăng lượt xem
         return view('chitiettin', compact('tin'));
     }
 }

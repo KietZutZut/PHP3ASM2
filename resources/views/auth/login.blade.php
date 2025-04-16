@@ -14,7 +14,7 @@
             </div>
             <div class="mb-3">
                 <label for="pass" class="form-label">Mật khẩu</label>
-                <input type="password" class="form-control" id="pass" name="pass" required>
+                <input type="password" class="form-control" id="pass" name="password" required>
             </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="remember" name="remember">

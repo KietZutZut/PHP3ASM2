@@ -45,15 +45,7 @@
             
             <!-- Google Maps -->
             <div class="card mt-4">
-                <iframe 
-                    width="100%" 
-                    height="300" 
-                    style="border:0;" 
-                    loading="lazy" 
-                    allowfullscreen 
-                    referrerpolicy="no-referrer-when-downgrade"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4820771702723!2d106.78273457482432!3d10.852568157870804!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175275d5e47662f%3A0x26f15e41f9dc3ac6!2zSG9DIE1pbmggSGFuIFRodXQ!5e0!3m2!1sen!2s!4v1710933333107!5m2!1sen!2s">
-                </iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3754.5529645790584!2d105.77987237473745!3d19.774138829686017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3136f98a5d8d886b%3A0x752428b3be1349a8!2zVHLGsOG7nW5nIENhbyDEkOG6s25nIEZQVCBQb2x5dGVjaG5pYw!5e0!3m2!1svi!2s!4v1743230834253!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </div>
